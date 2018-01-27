@@ -36,7 +36,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 		$match_name = $result[1];
 		$match_distance = $result[2];
 		//echo $result[1] ." ---". $result[2];
-		echo "<script>alert('". $match_name ." ---". $match_distance ."');";
+		//echo "<script>alert('". $match_name ." ---". $match_distance ."');";
 	}else{
 		echo "<script>alert('Upload failed: move failed');window.location='./';</script>";
 	}
@@ -110,7 +110,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 					        <div class="plan green">
 						        <div class="plan-header">
 						        	<div class="plan-title">
-						        		Recognition result
+						        		Recognition result <?php echo $match_distance; ?>
 					        		</div> <!-- /plan-title -->				
 						        </div> <!-- /plan-header -->	          
 						        
