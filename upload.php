@@ -11,16 +11,18 @@ if($file_size>10*1024*1024) {
 }
 
 $file_type=$_FILES['file_upload']['type'];  
-echo $file_type;  
-if($file_type!="image/jpeg" && $file_type!='image/pjpeg') {  
+if($file_type!="image/jpeg" && $file_type!='image/pjpeg' && $file_type!='image/png') {  
     echo "<script>alert('Only accept jpg, jpeg, png');window.location='./';</script>";
     exit();  
 }
+if($file_type=="image/jpeg") $file_type=".jpg";
+if($file_type=="image/pjpeg") $file_type=".jpeg";
+if($file_type=="image/png") $file_type=".png";
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
-	$move_to_file="/var/www/html/ai/face/temp/".getMillisecond();
+	$move_to_file="/var/www/html/ai/face/temp/".getMillisecond().$file_type;
   if(move_uploaded_file($uploaded_file,$move_to_file)){
 	  echo "<script>alert('Upload Successfully!');window.location='./';</script>";
 	}else{
