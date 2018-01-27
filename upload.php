@@ -20,6 +20,8 @@ if($file_type=="image/pjpeg") $file_type=".jpeg";
 if($file_type=="image/png") $file_type=".png";
 
 $new_name = getMillisecond().$file_type;
+$match_name = "";
+$match_distance = "";
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Clean up the folder
@@ -31,8 +33,10 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	if(move_uploaded_file($uploaded_file,$move_to_file)){
 		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.4 --show-distance true');
 		$result = split(",",$output);
+		$match_name = $result[1];
+		$match_distance = $result[2];
 		//echo $result[1] ." ---". $result[2];
-		echo "<script>alert('". $result[1] ." ---". $result[2] ."');window.location='./';</script>";
+		echo "<script>alert('". $match_name ." ---". $match_distance ."');";
 	}else{
 		echo "<script>alert('Upload failed: move failed');window.location='./';</script>";
 	}
@@ -111,14 +115,14 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 						        </div> <!-- /plan-header -->	          
 						        
 								<div class="plan" align="center">
-									mayun
+									<?php echo $match_name; ?>
 								</div>
 						        <div class="plan-title" align="center">
-									<img src="temp/001.jpg" width="300px">
+									<img src="<?php echo "./knownpic/".$match_name.".jpg"; ?>" width="300px">
 								</div>
 								
 								<div class="plan-title" align="center">				
-									<img src="temp/mayun.jpg" width="300px">
+									<img src="<?php echo "./temp/".$new_name; ?>" width="300px">
 								</div>
 								
 								<div class="plan-actions">				
