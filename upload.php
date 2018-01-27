@@ -31,8 +31,9 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
 	$move_to_file="/var/www/html/ai/face/temp/".$new_name;
 	if(move_uploaded_file($uploaded_file,$move_to_file)){
-		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.4 --show-distance true');
-		$result = split(",",$output);
+		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.45 --show-distance true');
+		$result = split("\n",$output);
+		$result = split(",",$result[0]);
 		$match_name = $result[1];
 		$match_distance = $result[2];
 		//echo $result[1] ." ---". $result[2];
