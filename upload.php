@@ -29,8 +29,10 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
 	$move_to_file="/var/www/html/ai/face/temp/".$new_name;
 	if(move_uploaded_file($uploaded_file,$move_to_file)){
-		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/');
-		echo "<script>alert('". $output ."');window.location='./';</script>";
+		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.4 --show-distance true');
+		$result = split(",",$output);
+		//echo $result[1] ." ---". $result[2];
+		echo "<script>alert('". $result[1] ." ---". $result[2] ."');window.location='./';</script>";
 	}else{
 		echo "<script>alert('Upload failed: move failed');window.location='./';</script>";
 	}
