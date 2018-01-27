@@ -1,4 +1,9 @@
 <?php
+function getMillisecond() {
+list($t1, $t2) = explode(' ', microtime());
+return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+}
+
 $file_size=$_FILES['file_upload']['size'];
 if($file_size>10*1024*1024) {
     echo "<script>alert('Upload failed: file too big!');window.location='./';</script>";
@@ -15,8 +20,7 @@ if($file_type!="image/jpeg" && $file_type!='image/pjpeg') {
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
-	$file_true_name=$_FILES['myfile']['name'];
-	$move_to_file="/var/www/html/ai/face/temp/".$file_true_name;
+	$move_to_file="/var/www/html/ai/face/temp/".getMillisecond();
   if(move_uploaded_file($uploaded_file,$move_to_file)){
 	  echo "<script>alert('Upload Successfully!');window.location='./';</script>";
 	}else{
