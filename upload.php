@@ -8,11 +8,19 @@ function ResizeImage($uploadfile,$maxwidth,$maxheight,$name){
  //current image size
  $width = imagesx($uploadfile);
  $height = imagesy($uploadfile);
- $i=0.5;
  //new image size
  if(($width > $maxwidth) || ($height > $maxheight)){
-  $newwidth = $width * $i;
-  $newheight = $height * $i;
+  //calculate new with & height
+  $widthratio = $maxwidth/$width;
+  $heightratio = $maxheight/$height;
+  if($widthratio < $heightratio){
+   $ratio = $widthratio;
+  }else{
+    $ratio = $heightratio;
+  }
+  $newwidth = intval($width * $ratio);
+  $newheight = intval($height * $ratio);
+  
   if(function_exists("imagecopyresampled")){
    $uploaddir_resize = imagecreatetruecolor($newwidth, $newheight);
    imagecopyresampled($uploaddir_resize, $uploadfile, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
