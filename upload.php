@@ -7,6 +7,25 @@ function getMillisecond() {
 	return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
 }
 
+function ImageAutoRotate($picAddr){
+        $exif = exif_read_data($picAddr);
+        $image = imagecreatefromjpeg($picAddr);
+        print_r($exif);
+        echo "<br/>";
+        if($exif['Orientation'] == 3) {
+                $result = imagerotate($image, 180, 0);
+                imagejpeg($result, $picAddr, 100);
+        } elseif($exif['Orientation'] == 6) {
+                $result = imagerotate($image, -90, 0);
+                imagejpeg($result, $picAddr, 100);
+        } elseif($exif['Orientation'] == 8) {
+                $result = imagerotate($image, 90, 0);
+                imagejpeg($result, $picAddr, 100);
+        }
+        isset($result) && imagedestroy($result);
+        imagedestroy($image);
+}
+
 function ResizeImage($uploadfile,$maxwidth,$maxheight,$name){
  //current image size
  $img = ImageCreateFromJpeg($uploadfile);
@@ -68,6 +87,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
 	$move_to_file="/var/www/html/ai/face/temp/".$new_name;
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
+	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
 		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.45 --show-distance true');
 		$result = explode("\n",$output);
