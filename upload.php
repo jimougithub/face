@@ -10,8 +10,6 @@ function getMillisecond() {
 function ImageAutoRotate($picAddr){
         $exif = exif_read_data($picAddr);
         $image = imagecreatefromjpeg($picAddr);
-        print_r($exif);
-        echo "<br/>";
         if($exif['Orientation'] == 3) {
                 $result = imagerotate($image, 180, 0);
                 imagejpeg($result, $picAddr, 100);
@@ -90,6 +88,9 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
 		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.45 --show-distance true');
+		if(trim($output)==''){
+			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
+		}
 		$result = explode("\n",$output);
 		$result = explode(",",$result[0]);
 		$match_name = $result[1];
