@@ -10,6 +10,8 @@ if($file_size>10*1024*1024) {
 
 function ImageAutoRotate($picAddr){
         $exif = exif_read_data($picAddr);
+		if(!isset($exif['Orientation'])) return;
+		
         $image = imagecreatefromjpeg($picAddr);
         if($exif['Orientation'] == 3) {
                 $result = imagerotate($image, 180, 0);
