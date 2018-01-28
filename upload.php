@@ -1,4 +1,7 @@
 <?php
+ini_set("display_errors", "On");
+error_reporting(E_ALL);
+
 function getMillisecond() {
 	list($t1, $t2) = explode(' ', microtime());
 	return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
@@ -6,8 +9,9 @@ function getMillisecond() {
 
 function ResizeImage($uploadfile,$maxwidth,$maxheight,$name){
  //current image size
- $width = imagesx($uploadfile);
- $height = imagesy($uploadfile);
+ $img = ImageCreateFromJpeg($uploadfile);
+ $width = imagesx($img);
+ $height = imagesy($img);
  //new image size
  if(($width > $maxwidth) || ($height > $maxheight)){
   //calculate new with & height
@@ -20,19 +24,19 @@ function ResizeImage($uploadfile,$maxwidth,$maxheight,$name){
   }
   $newwidth = intval($width * $ratio);
   $newheight = intval($height * $ratio);
-  
+
   if(function_exists("imagecopyresampled")){
    $uploaddir_resize = imagecreatetruecolor($newwidth, $newheight);
-   imagecopyresampled($uploaddir_resize, $uploadfile, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+   imagecopyresampled($uploaddir_resize, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
   }else{
    $uploaddir_resize = imagecreate($newwidth, $newheight);
-   imagecopyresized($uploaddir_resize, $uploadfile, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+   imagecopyresized($uploaddir_resize, $img, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
   }
-  
+
   ImageJpeg($uploaddir_resize,$name);
   ImageDestroy ($uploaddir_resize);
  }else{
-  ImageJpeg ($uploadfile,$name);
+  ImageJpeg ($img,$name);
  }
  return true;
 }
