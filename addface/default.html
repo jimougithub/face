@@ -52,7 +52,7 @@
 
 <div class="account-container">
 	<div class="content clearfix">
-		<form action="./uploadface.php" method="post" enctype="multipart/form-data">
+		<form action="./uploadface.php" method="post" enctype="multipart/form-data" name="addpicform" id="addpicform">
 			<h1>Add a known face</h1>
 			<div class="field">
 				<label for="username">Name of this person</label>
@@ -64,14 +64,23 @@
 			</div>
 			
 			<div class="login-actions">
-				<button class="button btn btn-success btn-large">Upload</button>
+				<button class="button btn btn-success btn-large" id="uploadbtn", name="uploadbtn">Upload</button>
 			</div> <!-- .actions -->
 		</form>
 	</div> <!-- /content -->
 </div> <!-- /account-container -->
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script>
+$("#addpicform").submit(function(){
+  if($.trim($("#username").val())==''){
+  	$("#username").focus();
+	alert('Please input Name of this person');
+	return false;
+  }
+});
+</script>>
 
 </body>
 </html>
