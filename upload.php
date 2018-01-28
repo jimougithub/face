@@ -154,7 +154,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 						        </div> <!-- /plan-header -->	          
 						        
 								<div class="plan" align="center">
-									<?php echo str_replace("_","",$match_name); ?>
+									<?php echo str_replace("_"," ",$match_name); ?>
 								</div>
 						        <div class="plan-title" align="center">
 									<img src="<?php echo "./knownpic/".$match_name.".jpg"; ?>" width="300px">
