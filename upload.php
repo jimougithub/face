@@ -77,7 +77,7 @@ if($file_type=="image/png") $file_type=".png";
 
 $new_name = getMillisecond().$file_type;
 $match_name = "unknown";
-$match_distance = "1";
+$match_distance = 1;
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Clean up the folder
@@ -95,10 +95,12 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 		}
 		$result = explode("\n",$output);
 		foreach ($result as $value) {
-			$result1 = explode(",",$value);
-			if($match_distance>$result1[2]){
-				$match_name = $result1[1];
-				$match_distance = $result1[2];
+			if(trim($value)!=""){
+				$result1 = explode(",",$value);
+				if($match_distance>$result1[2]){
+					$match_name = $result1[1];
+					$match_distance = $result1[2];
+				}
 			}
 		}
 		//echo $result[1] ." ---". $result[2];

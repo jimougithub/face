@@ -74,6 +74,7 @@ if($new_name==""){
 	echo "<script>alert('Upload failed: Please input name of this person');window.location='./';</script>";
     exit();
 }
+$new_name = $new_name.$file_type;
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Move uploaded file to right path
