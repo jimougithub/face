@@ -22,7 +22,6 @@ if($new_name==""){
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
-	$new_name=$_FILES['file_upload']['name'];
 	$move_to_file="/var/www/html/ai/face/knownpic/".$new_name;
 	if(move_uploaded_file($uploaded_file,$move_to_file)){
 		echo "<script>alert('Upload successful!');window.location='./';</script>";

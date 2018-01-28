@@ -70,8 +70,8 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
 		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.45 --show-distance true');
-		$result = split("\n",$output);
-		$result = split(",",$result[0]);
+		$result = explode("\n",$output);
+		$result = explode(",",$result[0]);
 		$match_name = $result[1];
 		$match_distance = $result[2];
 		//echo $result[1] ." ---". $result[2];
@@ -154,7 +154,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 						        </div> <!-- /plan-header -->	          
 						        
 								<div class="plan" align="center">
-									<?php echo $match_name; ?>
+									<?php echo str_replace("_","",$match_name); ?>
 								</div>
 						        <div class="plan-title" align="center">
 									<img src="<?php echo "./knownpic/".$match_name.".jpg"; ?>" width="300px">
