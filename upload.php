@@ -1,7 +1,32 @@
 <?php
 function getMillisecond() {
-list($t1, $t2) = explode(' ', microtime());
-return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+	list($t1, $t2) = explode(' ', microtime());
+	return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+}
+
+function ResizeImage($uploadfile,$maxwidth,$maxheight,$name){
+ //current image size
+ $width = imagesx($uploadfile);
+ $height = imagesy($uploadfile);
+ $i=0.5;
+ //new image size
+ if(($width > $maxwidth) || ($height > $maxheight)){
+  $newwidth = $width * $i;
+  $newheight = $height * $i;
+  if(function_exists("imagecopyresampled")){
+   $uploaddir_resize = imagecreatetruecolor($newwidth, $newheight);
+   imagecopyresampled($uploaddir_resize, $uploadfile, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+  }else{
+   $uploaddir_resize = imagecreate($newwidth, $newheight);
+   imagecopyresized($uploaddir_resize, $uploadfile, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+  }
+  
+  ImageJpeg($uploaddir_resize,$name);
+  ImageDestroy ($uploaddir_resize);
+ }else{
+  ImageJpeg ($uploadfile,$name);
+ }
+ return true;
 }
 
 $file_size=$_FILES['file_upload']['size'];
@@ -30,7 +55,8 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
 	$move_to_file="/var/www/html/ai/face/temp/".$new_name;
-	if(move_uploaded_file($uploaded_file,$move_to_file)){
+	//if(move_uploaded_file($uploaded_file,$move_to_file)){
+	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
 		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.45 --show-distance true');
 		$result = split("\n",$output);
 		$result = split(",",$result[0]);
