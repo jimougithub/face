@@ -12,7 +12,7 @@ if($file_size>10*1024*1024) {
 
 $file_type=$_FILES['file_upload']['type'];  
 if($file_type!="image/jpeg" && $file_type!='image/pjpeg' && $file_type!='image/png') {  
-    echo "<script>alert('Only accept jpg, jpeg, png');window.location='./';</script>";
+    echo "<script>alert('Only accept jpg, jpeg, png. ". $file_type ."');window.location='./';</script>";
     exit();  
 }
 if($file_type=="image/jpeg") $file_type=".jpg";
