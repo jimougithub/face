@@ -82,7 +82,8 @@ $temp_path = "/var/www/html/ai/face/temp/".session_id()."/";
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Clean up the folder
-	$output = shell_exec('rm -rf '.$temp_path.'*');
+	$output = shell_exec('rm -rf '.$temp_path);
+	$output = shell_exec('mkdir '.$temp_path);
 	
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
