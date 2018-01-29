@@ -78,18 +78,19 @@ if($file_type=="image/png") $file_type=".png";
 $new_name = getMillisecond().$file_type;
 $match_name = "unknown";
 $match_distance = 1;
+$temp_path = "/var/www/html/ai/face/temp/".session_id()."/";
 
 if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//Clean up the folder
-	$output = shell_exec('rm -rf /var/www/html/ai/face/temp/*');
+	$output = shell_exec('rm -rf '.$temp_path.'*');
 	
 	//Move uploaded file to right path
 	$uploaded_file=$_FILES['file_upload']['tmp_name'];
-	$move_to_file="/var/www/html/ai/face/temp/".$new_name;
+	$move_to_file=$temp_path.$new_name;
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
-		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ /var/www/html/ai/face/temp/ --tolerance 0.4 --show-distance true');
+		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ '.$temp_path.' --tolerance 0.4 --show-distance true');
 		if(trim($output)==''){
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
 		}
@@ -190,7 +191,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 								</div>
 								
 								<div class="plan-title" align="center">				
-									<img src="<?php echo "./temp/".$new_name; ?>" width="300px">
+									<img src="<?php echo "./temp/".session_id()."/".$new_name; ?>" width="300px">
 								</div>
 								
 								<div class="plan-actions">				
