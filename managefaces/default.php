@@ -14,15 +14,17 @@ function getFileList($directory) {
 
 
 //Login ---------------------------------------------
-$username = trim($_REQUEST['username']);
-$password = trim($_REQUEST['password']);
-if($username!="" && $password!=""){
-	if($username!="administrator" || $password!="********"){
-		$_SESSION["admin"]=null;
-		echo "<script>alert(\"Invalid logon！\");window.location='./login.htm';</script>";
-		exit();
-	}else{
-		$_SESSION["admin"]="Y";
+if(!empty($_REQUEST['username']) && !empty($_REQUEST['password'])){
+	$username = trim($_REQUEST['username']);
+	$password = trim($_REQUEST['password']);
+	if($username!="" && $password!=""){
+		if($username!="administrator" || $password!="********"){
+			$_SESSION["admin"]=null;
+			echo "<script>alert(\"Invalid logon！\");window.location='./login.htm';</script>";
+			exit();
+		}else{
+			$_SESSION["admin"]="Y";
+		}
 	}
 }
 
