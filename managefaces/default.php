@@ -1,7 +1,6 @@
 <?php
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
-session_start();
 
 function getFileList($directory) {        
     $files = array();        
@@ -38,9 +37,11 @@ if($loginFlag!="Y"){
 }
 
 // Remove pic-------------------------------------
-$removeid = trim($_REQUEST['remove']);
-if($removeid!=""){
-	$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
+if(!empty($_REQUEST['remove'])){
+	$removeid = trim($_REQUEST['remove']);
+	if($removeid!=""){
+		$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
+	}
 }
 
 // List pic --------------------------------------
@@ -129,7 +130,7 @@ $list = getFileList("../knownpic/");
 										<?php
 											foreach($list as $value){
 												echo "<tr>";
-												echo "<td> <img src='/knownpic/". $value ."' width='200px'> </td>";
+												echo "<td> <img src='../knownpic/". $value ."' width='200px'> </td>";
 												echo "<td> ". str_replace("_"," ",str_replace(".jpg","",$value)) ." </td>";
 												echo "<td class='td-actions'><a href='./?remove=". $value. "' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
 												echo "</tr>";
