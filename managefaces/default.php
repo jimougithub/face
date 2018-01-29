@@ -1,6 +1,7 @@
 <?php
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
+session_start();
 
 function getFileList($directory) {        
     $files = array();        
@@ -12,12 +13,38 @@ function getFileList($directory) {
     return $files;
 }
 
-$list = getFileList("../knownpic/");
 
+//Login ---------------------------------------------
+$username = trim($_REQUEST['username']);
+$password = trim($_REQUEST['password']);
+if($username!="" && $password!=""){
+	if($username!="administrator" || $password!="********"){
+		$_SESSION["admin"]=null;
+		echo "<script>alert(\"Invalid logon！\");window.location='./login.htm';</script>";
+		exit();
+	}else{
+		$_SESSION["admin"]="Y";
+	}
+}
+
+// Check login --------------------------------------
+$loginFlag = "N";
+if(!empty($_SESSION['admin'])){
+    $loginFlag=$_SESSION['admin'];
+}
+if($loginFlag!="Y"){
+	echo "<script>alert(\"Please logon！\");window.location='./login.htm';</script>";
+	exit();
+}
+
+// Remove pic-------------------------------------
 $removeid = trim($_REQUEST['remove']);
 if($removeid!=""){
 	$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
 }
+
+// List pic --------------------------------------
+$list = getFileList("../knownpic/");
 ?>
 <!DOCTYPE html>
 <html lang="en">
