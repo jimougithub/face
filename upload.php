@@ -2,6 +2,11 @@
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
 
+$locale='en_US.UTF-8';
+setlocale(LC_ALL,$locale);
+putenv('LC_ALL='.$locale);
+
+
 function getMillisecond() {
 	list($t1, $t2) = explode(' ', microtime());
 	return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);

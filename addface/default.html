@@ -73,24 +73,11 @@
 <script src="../js/jquery-1.7.2.min.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script>
-function isChinese(str){
-	if(/^[\u3220-\uFA29]+$/.test(str)){
-		return true;
-	}else{
-		return false;
-	}
-}
-		
 $("#addpicform").submit(function(){
   if($.trim($("#username").val())==''){
   	$("#username").focus();
 	alert('Please input Name of this person');
 	return false;
-  }else{
-  	if( isChinese("#username").val()) ){
-		alert('Only English is allowed');
-		return false;
-	}
   }
 });
 </script>
