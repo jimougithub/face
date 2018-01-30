@@ -91,7 +91,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
-		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ '.$temp_path.' --tolerance 0.4 --show-distance true');
+		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ '.$temp_path.' --tolerance 0.35 --show-distance true');
 		if(trim($output)==''){
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
 		}
