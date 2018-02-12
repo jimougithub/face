@@ -1,5 +1,7 @@
 <?php
 require_once("../inc/managepass.php");
+require_once("../inc/conn.php");
+
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
 
@@ -131,11 +133,13 @@ $list = getFileList("../knownpic/");
 										</thead>
 										<tbody>
 										<?php
-											foreach($list as $value){
+											$sql="SELECT A.*, B.picname FROM `knownpeople` A JOIN knownpic B ON (A.pplid = B.pplid)";
+											$result = mysql_query($sql);
+											while($row = mysql_fetch_array($result)){
 												echo "<tr>";
-												echo "<td> <img src='../knownpic/". $value ."' width='200px'> </td>";
-												echo "<td> ". str_replace("_"," ",str_replace(".jpg","",$value)) ." </td>";
-												echo "<td class='td-actions'><a href='./?remove=". $value. "' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
+												echo "<td> <img src='../knownpic/". $row["picname"] ."' width='200px'> </td>";
+												echo "<td> ". $row["pplname"] ." </td>";
+												echo "<td class='td-actions'><a href='./?remove=". $row["picname"] ."' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
 												echo "</tr>";
 											}
 										?>
