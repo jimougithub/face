@@ -1,4 +1,5 @@
 <?php
+require_once("../inc/managepass.php");
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
 
@@ -18,7 +19,7 @@ if(!empty($_REQUEST['username']) && !empty($_REQUEST['password'])){
 	$username = trim($_REQUEST['username']);
 	$password = trim($_REQUEST['password']);
 	if($username!="" && $password!=""){
-		if($username!="administrator" || $password!="********"){
+		if($username!="administrator" || $password!=$admin_pass){
 			$_SESSION["admin"]=null;
 			echo "<script>alert(\"Invalid logon！\");window.location='./login.htm';</script>";
 			exit();
