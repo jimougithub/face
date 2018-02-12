@@ -45,7 +45,13 @@ if($loginFlag!="Y"){
 if(!empty($_REQUEST['remove'])){
 	$removeid = trim($_REQUEST['remove']);
 	if($removeid!=""){
-		$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
+		$sql="DELETE FROM `knownpic` WHERE pplid = ".$removeid;
+		if (mysql_query($sql)){
+			$sql="DELETE FROM `knownpeople` WHERE pplid = ".$removeid;
+			if (mysql_query($sql)){
+				$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
+			}
+		}
 	}
 }
 
@@ -139,7 +145,7 @@ $list = getFileList("../knownpic/");
 												echo "<tr>";
 												echo "<td> <img src='../knownpic/". $row["picname"] ."' width='200px'> </td>";
 												echo "<td> ". $row["pplname"] ." </td>";
-												echo "<td class='td-actions'><a href='./?remove=". $row["picname"] ."' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
+												echo "<td class='td-actions'><a href='./?remove=". $row["pplid"] ."' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
 												echo "</tr>";
 											}
 										?>
