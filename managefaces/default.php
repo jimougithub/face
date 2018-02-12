@@ -49,7 +49,7 @@ if(!empty($_REQUEST['remove'])){
 		if (mysql_query($sql)){
 			$sql="DELETE FROM `knownpeople` WHERE pplid = ".$removeid;
 			if (mysql_query($sql)){
-				$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid);
+				$output = shell_exec('rm -rf /var/www/html/ai/face/knownpic/'.$removeid.".jpg");
 			}
 		}
 	}
