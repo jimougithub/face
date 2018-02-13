@@ -96,22 +96,16 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
-		$output = shell_exec('face_recognition /var/www/html/ai/face/knownpic/ '.$temp_path.' --tolerance 0.35 --show-distance true');
+		$output = shell_exec('python ./facerecong/facecompare.py --pic='.$move_to_file);
 		if(trim($output)==''){
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
-		}
-		$result = explode("\n",$output);
-		foreach ($result as $value) {
-			if(trim($value)!=""){
-				$result1 = explode(",",$value);
-				if($match_distance>$result1[2]){
-					$match_name = $result1[1];
-					$match_distance = $result1[2];
-				}
+		}else{
+			$result = json_decode($output,true);
+			foreach($array as $distinct=>$pplid){
+				$match_name = $pplid;
+				$match_distance = $distinct;
 			}
 		}
-		//echo $result[1] ." ---". $result[2];
-		//echo "<script>alert('". $match_name ." ---". $match_distance ."');";
 	}else{
 		echo "<script>alert('Upload failed: move failed');window.location='./';</script>";
 	}
