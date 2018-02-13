@@ -101,7 +101,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
 		}else{
 			$result = json_decode($output,true);
-			foreach($array as $distinct=>$pplid){
+			foreach($result as $distinct=>$pplid){
 				$match_name = $pplid;
 				$match_distance = $distinct;
 			}
