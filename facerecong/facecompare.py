@@ -47,4 +47,4 @@ for i in range(len(tmpary)):
   if args.num>0 and i>=args.num-1:
     break
 
-print(rtnary)
+print(dict(rtnary))
