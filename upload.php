@@ -105,6 +105,9 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 				$match_name = $pplid;
 				$match_distance = $distinct;
 			}
+			if(intval($match_distance)>3.5){
+					$match_name = "Unknown face"
+			}
 		}
 	}else{
 		echo "<script>alert('Upload failed: move failed');window.location='./';</script>";
