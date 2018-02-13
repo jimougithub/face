@@ -1,6 +1,7 @@
 import argparse
 import face_recognition
 import numpy as np
+import json
 import io
 import MySQLdb
 import conn
@@ -47,4 +48,4 @@ for i in range(len(tmpary)):
   if args.num>0 and i>=args.num-1:
     break
 
-print(dict(rtnary))
+print(json.dumps(dict(rtnary)))
