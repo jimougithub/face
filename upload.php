@@ -105,7 +105,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 				$match_name = $pplid;
 				$match_distance = $distinct;
 			}
-			if(intval($match_distance)>3.5){
+			if(floatval($match_distance)>0.35){
 					$match_name = "Unknown face";
 			}
 		}
