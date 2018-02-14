@@ -94,7 +94,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
 		$sql="INSERT INTO knownpeople(pplid, pplname, ppldesc) VALUES(". $pplid .", '". $pplname ."', '". $ppldesc ."')";
 		if (mysql_query($sql)){
-			$output = shell_exec('python ./addface/addface.py --pic='. $move_to_file .' --id='. $pplid);
+			$output = shell_exec('python ./addface.py --pic='. $move_to_file .' --id='. $pplid);
 			echo "<script>alert('Upload successful!');window.location='./';</script>";
 		}
 	}else{
