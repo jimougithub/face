@@ -1,6 +1,7 @@
 <?php
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
+require_once("./inc/conn.php");
 
 $locale='en_US.UTF-8';
 setlocale(LC_ALL,$locale);
@@ -81,7 +82,9 @@ if($file_type=="image/pjpeg") $file_type=".jpeg";
 if($file_type=="image/png") $file_type=".png";
 
 $new_name = getMillisecond().$file_type;
-$match_name = "unknown";
+$match_name = "Unknown";
+$ppl_name = "";
+$ppl_desc = "";
 $match_distance = 1;
 $temp_path = "/var/www/html/ai/face/temp/".session_id()."/";
 
@@ -104,9 +107,17 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 			foreach($result as $distinct=>$pplid){
 				$match_name = $pplid;
 				$match_distance = $distinct;
+				break;
 			}
-			if(floatval($match_distance)>0.35){
-					$match_name = "Unknown face";
+			//If hit rate is good then show
+			if(floatval($match_distance)<0.35){
+				$sql="SELECT * FROM knownpeople WHERE pplid=". $match_name;
+				$result = mysql_query($sql);
+				if($row = mysql_fetch_array($result)){
+					$ppl_name = $row["pplname"];
+					$ppl_desc = $row["ppldesc"];
+				}
+				mysql_close($conn);
 			}
 		}
 	}else{
@@ -187,9 +198,12 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 						        </div> <!-- /plan-header -->	          
 						        
 								<div class="plan" align="center">
-									<?php echo str_replace("_"," ",$match_name); ?>
+									<?php echo $ppl_name; ?>
 								</div>
-						        <div class="plan-title" align="center">
+								<div class="plan" align="center">
+									<?php echo $ppl_desc; ?>
+								</div>
+								<div class="plan-title" align="center">
 									<img src="<?php echo "./knownpic/".$match_name.".jpg"; ?>" width="300px">
 								</div>
 								
