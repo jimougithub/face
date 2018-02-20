@@ -145,6 +145,7 @@ $list = getFileList("../knownpic/");
 												echo "<tr>";
 												echo "<td> <img src='../knownpic/". $row["picname"] ."' width='200px'> </td>";
 												echo "<td> ". $row["pplname"] ." </td>";
+												echo "<td> ". $row["ppldesc"] ." </td>";
 												echo "<td class='td-actions'><a href='./?remove=". $row["pplid"] ."' class='btn btn-danger btn-small'><i class='btn-icon-only icon-remove'> </i></a></td>";
 												echo "</tr>";
 											}
