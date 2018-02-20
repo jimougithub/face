@@ -195,8 +195,8 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 					        <div class="plan green">
 						        <div class="plan-header">
 						        	<div class="plan-title">
-						        		Recognition time <?php echo round($t2-$t1,3).'secs<br>'; ?>
-						        		Recognition result <?php echo $match_distance; ?>
+						        		Recognition time <?php echo round($t2-$t1,4).' secs<br>'; ?>
+						        		Recognition result <?php echo round($match_distance,4); ?>
 					        		</div> <!-- /plan-title -->				
 						        </div> <!-- /plan-header -->	          
 						        
