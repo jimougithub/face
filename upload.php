@@ -99,7 +99,9 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
+		$t1 = microtime(true);
 		$output = shell_exec('python3.4 ./facerecong/facecompare.py --pic='.$move_to_file);
+		$t2 = microtime(true);
 		if(trim($output)==''){
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
 		}else{
@@ -193,6 +195,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 					        <div class="plan green">
 						        <div class="plan-header">
 						        	<div class="plan-title">
+						        		Recognition time <?php echo round($t2-$t1,3).'secs<br>'; ?>
 						        		Recognition result <?php echo $match_distance; ?>
 					        		</div> <!-- /plan-title -->				
 						        </div> <!-- /plan-header -->	          
