@@ -132,8 +132,9 @@ $list = getFileList("../knownpic/");
 									<table class="table table-striped table-bordered">
 										<thead>
 										  <tr>
+											<th> Picture </th>
 											<th> Name </th>
-											<th> Picture</th>
+											<th> Description </th>
 											<th class="td-actions"> Remove </th>
 										  </tr>
 										</thead>
