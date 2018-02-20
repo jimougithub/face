@@ -99,7 +99,7 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 	//if(move_uploaded_file($uploaded_file,$move_to_file)){
 	ImageAutoRotate($uploaded_file);		//Fix iphone upload problem
 	if(ResizeImage($uploaded_file,640,640,$move_to_file)){
-		$output = shell_exec('python ./facerecong/facecompare.py --pic='.$move_to_file);
+		$output = shell_exec('python3.4 ./facerecong/facecompare.py --pic='.$move_to_file);
 		if(trim($output)==''){
 			echo "<script>alert('Upload failed: recognition failed');window.location='./';</script>";
 		}else{
