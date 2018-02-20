@@ -81,7 +81,9 @@ $pplid = 1000001;
 $sql="SELECT MAX(pplid)+1 as newpplid FROM knownpeople";
 $result = mysql_query($sql);
 if($row = mysql_fetch_array($result)){
-	$pplid = $row["newpplid"];
+	if($row["newpplid"]!=null){
+		$pplid = $row["newpplid"];
+	}
 }
 $new_name = $pplid.$file_type;
 
