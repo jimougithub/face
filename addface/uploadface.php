@@ -1,7 +1,8 @@
 <?php
+require_once("../inc/conn.php");
+
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
-require_once("../inc/conn.php");
 
 $file_size=$_FILES['file_upload']['size'];
 if($file_size>10*1024*1024) {
