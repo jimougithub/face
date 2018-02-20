@@ -17,7 +17,7 @@ new_image = face_recognition.load_image_file(args.pic)
 new_encoding = face_recognition.face_encodings(new_image)[0]
 output = io.BytesIO()
 np.savetxt(output, new_encoding)
-content = output.getvalue()
+content = output.getvalue().decode()
 content = content.replace("\n", ";")
 
 picname = str(args.id)+".jpg"
