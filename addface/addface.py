@@ -3,6 +3,7 @@ import face_recognition
 import numpy as np
 import io
 import MySQLdb
+import conn
 
 # Parameters
 parser = argparse.ArgumentParser(description='--pic /var/tmp/1.jpg --id 1000001')
@@ -10,7 +11,7 @@ parser.add_argument('--pic', type=str, default=None)
 parser.add_argument('--id', type=int, default=1000001)
 args = parser.parse_args()
 
-conn = MySQLdb.connect(host='localhost',user='ai',passwd='AiPassword',db='ai',charset='utf8')
+conn = MySQLdb.connect(host='localhost',user=conn.dbuser,passwd=conn.dbpass,db=conn.dbname,charset='utf8')
 cursor = conn.cursor()
 
 new_image = face_recognition.load_image_file(args.pic)
