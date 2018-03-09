@@ -1,0 +1,6 @@
+<?php
+$mysql_server_name="localhost";
+$mysql_database="ai";
+$mysql_username="ai";
+$mysql_password="xxxxxxx";
+?>

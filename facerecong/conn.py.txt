@@ -1,0 +1,3 @@
+dbname='ai'
+dbuser='ai'
+dbpass='xxxxxxx'
