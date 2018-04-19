@@ -120,6 +120,8 @@ if(is_uploaded_file($_FILES['file_upload']['tmp_name'])) {
 					$ppl_desc = $row["ppldesc"];
 				}
 				mysql_close($conn);
+			}else{
+				$match_name = "Unknown";
 			}
 		}
 	}else{
