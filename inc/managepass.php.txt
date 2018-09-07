@@ -1,0 +1,3 @@
+<?php
+$admin_pass="xxxxxxxx";
+?>
